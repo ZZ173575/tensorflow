@@ -64,12 +64,17 @@ add_library(tensorflowlite_c ${TFLITE_C_LIBTYPE}
   builtin_op_data.h
   common.h
   common.cc
+  common_internal.cc
+  common_internal.h
   c_api_types.h
   c_api.h
   c_api.cc
   c_api_experimental.h
   c_api_experimental.cc
+  c_api_internal.cc
   c_api_internal.h
+  c_api_opaque.cc
+  c_api_opaque.h
 )
 
 if (TFLITE_C_BUILD_SHARED_LIBS)

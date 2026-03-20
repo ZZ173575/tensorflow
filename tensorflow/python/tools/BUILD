@@ -59,6 +59,33 @@ py_test(
 )
 
 py_library(
+    name = "inference_utils",
+    srcs = ["inference_utils.py"],
+    srcs_version = "PY3",
+    deps = [
+        "//tensorflow/python/saved_model:load",
+        "//tensorflow/python/saved_model:signature_constants",
+        "//tensorflow/python/saved_model:tag_constants",
+    ],
+)
+
+py_test(
+    name = "inference_utils_test",
+    size = "small",
+    srcs = ["inference_utils_test.py"],
+    python_version = "PY3",
+    srcs_version = "PY3",
+    tags = ["no_windows"],
+    visibility = ["//visibility:private"],
+    deps = [
+        ":inference_utils",
+        "//tensorflow/python:client_testlib",
+        "//tensorflow/python/saved_model",
+        "//third_party/py/numpy",
+    ],
+)
+
+py_library(
     name = "freeze_graph_lib",
     srcs = ["freeze_graph.py"],
     srcs_version = "PY3",

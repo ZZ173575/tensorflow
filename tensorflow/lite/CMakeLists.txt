@@ -532,6 +532,11 @@ target_link_libraries(tensorflow-lite
 
 if (NOT BUILD_SHARED_LIBS)
   list(APPEND TFLITE_TARGET_PUBLIC_OPTIONS "-DTFL_STATIC_LIBRARY_BUILD")
+elseif (WIN32)
+  # When building tensorflow-lite as a DLL on Windows, export symbols via
+  # __declspec(dllexport).  Consumers of the DLL will get __declspec(dllimport)
+  # automatically because TFL_COMPILE_LIBRARY will not be defined for them.
+  list(APPEND TFLITE_TARGET_PUBLIC_OPTIONS "-DTFL_COMPILE_LIBRARY")
 endif()
 
 target_compile_options(tensorflow-lite

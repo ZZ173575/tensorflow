@@ -46,3 +46,43 @@ The generated shared library will be available in your
 library together with the necessary headers (`c_api.h`, `c_api_experimental.h`
 and `common.h`) will be available soon, and will also be released as a prebuilt
 archive (together with existing prebuilt packages for Android/iOS).
+
+### Building with CMake (including Windows DLL)
+
+The C API can also be built as a shared library using
+[CMake](https://cmake.org/) 3.16+. This is the recommended approach for
+Windows, where the output is `tensorflowlite_c.dll`.
+
+From the root of the TensorFlow source tree, run:
+
+```sh
+mkdir tflite_c_build && cd tflite_c_build
+cmake ../tensorflow/lite/c -DTFLITE_C_BUILD_SHARED_LIBS=ON
+cmake --build . --config Release
+```
+
+On Windows with Visual Studio, open a "Developer Command Prompt for VS" (choose
+the architecture-appropriate variant, e.g. "x64 Native Tools Command Prompt")
+and run:
+
+```bat
+mkdir tflite_c_build
+cd tflite_c_build
+cmake ..\tensorflow\lite\c -DTFLITE_C_BUILD_SHARED_LIBS=ON
+cmake --build . --config Release
+```
+
+The resulting `tensorflowlite_c.dll` (Windows) or `libtensorflowlite_c.so`
+(Linux) / `libtensorflowlite_c.dylib` (macOS) can then be used for inference
+by linking against it and including the public C headers (`c_api.h`,
+`c_api_experimental.h`, and `common.h`).
+
+To build `tensorflow-lite` itself as a shared library (instead of the C API
+wrapper), pass `-DBUILD_SHARED_LIBS=ON` to the top-level
+`tensorflow/lite/CMakeLists.txt` instead:
+
+```sh
+mkdir tflite_build && cd tflite_build
+cmake ../tensorflow/lite -DBUILD_SHARED_LIBS=ON
+cmake --build . --config Release
+```
